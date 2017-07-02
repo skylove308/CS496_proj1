@@ -33,7 +33,7 @@ public class FirstFragment extends Fragment {
         ListView listview = (ListView) view.findViewById(R.id.contact_list);
         listview.setAdapter(adapter);
 
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab1);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

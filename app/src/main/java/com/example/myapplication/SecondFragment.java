@@ -17,7 +17,7 @@ import android.widget.ListView;
  */
 public class SecondFragment extends Fragment {
 
-    static final String[] LIST_CONTACT = {"PERSON1", "PERSON2", "PERSON3"};
+    static final String[] LIST_CONTACT = {"PERSON1", "PERSON2", "PERSON3", "P", "P", "P", "P", "P", "P", "P", "P", "P", "P", "P", "P"};
 
     public SecondFragment() {
         // Required empty public constructor
@@ -28,13 +28,13 @@ public class SecondFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_first, null);
+        View view = inflater.inflate(R.layout.fragment_second, null);
         ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, LIST_CONTACT);
 
-        ListView listview = (ListView) view.findViewById(R.id.contact_list);
+        ListView listview = (ListView) view.findViewById(R.id.photo_list);
         listview.setAdapter(adapter);
 
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab2);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

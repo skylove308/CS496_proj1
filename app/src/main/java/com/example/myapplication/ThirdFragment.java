@@ -22,18 +22,18 @@ public class ThirdFragment extends Fragment {
     public ThirdFragment() {
         // Required empty public constructor
     }
-    
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_first, null);
+        View view = inflater.inflate(R.layout.fragment_third, null);
         ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, LIST_CONTACT);
 
-        ListView listview = (ListView) view.findViewById(R.id.contact_list);
+        ListView listview = (ListView) view.findViewById(R.id.some_list);
         listview.setAdapter(adapter);
 
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab3);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
