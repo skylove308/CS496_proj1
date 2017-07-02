@@ -62,15 +62,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(1).setIcon(ICONS[1]);
         tabLayout.getTabAt(2).setIcon(ICONS[2]);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
     }
 
     /**
