@@ -17,6 +17,7 @@ import android.widget.ListView;
  */
 public class SecondFragment extends Fragment {
 
+
     static final String[] LIST_CONTACT = {"PERSON1", "PERSON2", "PERSON3", "P", "P", "P", "P", "P", "P", "P", "P", "P", "P", "P", "P"};
 
     public SecondFragment() {
