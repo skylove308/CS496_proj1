@@ -1,32 +1,22 @@
 package com.example.myapplication;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
 
 
 /**
@@ -51,9 +41,7 @@ public class FirstFragment extends Fragment {
             JSONArray jarray = new JSONArray(json);  // JSONArray 생성
             final List<String> listContents = new ArrayList<String>(jarray.length());
             final List<String> listContents2 = new ArrayList<String>(jarray.length());
-            final List<String> listContents3 = new ArrayList<String>(jarray.length());
             for(int i=0; i < jarray.length(); i++){
-                JSONObject jObject = jarray.getJSONObject(i);  // JSONObject 추출
                 listContents.add(jarray.getJSONObject(i).getString("name")); //name 리스트 생성
                 listContents2.add(jarray.getJSONObject(i).getString("number")); //number 리스트 생성
             }
@@ -80,8 +68,12 @@ public class FirstFragment extends Fragment {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                    Intent intent = new Intent(
+                            getActivity().getApplicationContext(),
+                            AppendContact.class
+                    );
+                    startActivity(intent);
+
                 }
             });
 
@@ -95,7 +87,7 @@ public class FirstFragment extends Fragment {
     public String parseJSON() {
         String json = null;
         try {
-            InputStream is = getActivity().getApplicationContext().getAssets().open("contact.json");
+            InputStream is = getActivity().getApplicationContext().getAssets().open("contact.json"); // contact.json file에서 pasring
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
@@ -107,6 +99,4 @@ public class FirstFragment extends Fragment {
         }
         return json;
     }
-
-
 }
