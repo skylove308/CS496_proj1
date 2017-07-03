@@ -60,6 +60,7 @@ public class FirstFragment extends Fragment {
                     );
                     intent.putExtra("name", listContents.get(position));
                     intent.putExtra("number", listContents2.get(position));
+                    intent.putExtra("picture", getResources().getIdentifier(listContents.get(position).toLowerCase(), "drawable", getActivity().getApplicationContext().getPackageName()));
                     startActivity(intent);
                 }
             });
