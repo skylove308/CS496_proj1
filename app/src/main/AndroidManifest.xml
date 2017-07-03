@@ -22,6 +22,12 @@
             android:name=".ContactDetail"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+
+        <activity
+            android:name=".PhotoDetail"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
         <activity android:name=".AppendContact"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
