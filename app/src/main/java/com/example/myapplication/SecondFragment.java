@@ -32,7 +32,7 @@ public class SecondFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public class SquareImageView  extends ImageView {
+    public class SquareImageView  extends android.support.v7.widget.AppCompatImageView {
 
         public SquareImageView(Context context) {
             super(context);
@@ -79,7 +79,7 @@ public class SecondFragment extends Fragment {
         class ImageAdapter extends BaseAdapter {
             private Context context;
 
-            private Integer[] images = {R.drawable.img_1, R.drawable.img_2, R.drawable.img_3, R.drawable.img_4,
+            private Integer[] images = {R.drawable.img_1,R.drawable.img_2, R.drawable.img_3, R.drawable.img_4,
                     R.drawable.img_5, R.drawable.img_6, R.drawable.img_7, R.drawable.img_8, R.drawable.img_9,
                     R.drawable.img_10, R.drawable.img_11, R.drawable.img_12, R.drawable.img_13, R.drawable.img_14,
                     R.drawable.img_15, R.drawable.img_16, R.drawable.img_17,
