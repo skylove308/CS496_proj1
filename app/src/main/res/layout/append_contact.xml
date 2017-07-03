@@ -16,15 +16,17 @@
         android:id="@+id/number"
         android:layout_width="200sp"
         android:layout_height="wrap_content"
+        android:inputType="number"
         android:hint="전화번호"/>
     <EditText
         android:id="@+id/e_mail"
         android:layout_width="200sp"
         android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
         android:hint="E-mail"/>
     <Button
         android:id="@+id/btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="추가"/>
+        android:text="추가"/>
 </LinearLayout>

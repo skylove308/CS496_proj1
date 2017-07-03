@@ -2,6 +2,9 @@ package com.example.myapplication;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -53,10 +56,26 @@ public class SecondFragment extends Fragment {
 
     }
 
+    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId, int reqWidth, int reqHeight) {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(res, resId, options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = 4;
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeResource(res, resId, options);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         class ImageAdapter extends BaseAdapter {
             private Context context;
 
@@ -91,8 +110,8 @@ public class SecondFragment extends Fragment {
                     imageView = (SquareImageView) convertView;
                 }
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                
-                imageView.setImageResource(images[position]);
+
+                imageView.setImageBitmap(decodeSampledBitmapFromResource(imageView.getResources(), images[position], 100,100));
                 return imageView;
             }
         }
@@ -102,8 +121,12 @@ public class SecondFragment extends Fragment {
         gridview.setAdapter(new ImageAdapter(getActivity()));
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
+            public void onItemClick(AdapterView parent, View v, int position, long id) {
+                Intent intent = new Intent(
+                        getActivity().getApplicationContext(),
+                        PhotoDetail.class
+                );
+                startActivity(intent);
             }
         });
 
