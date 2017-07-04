@@ -22,9 +22,17 @@
             android:name=".ContactDetail"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+
+        <activity
+            android:name=".PhotoDetail"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
         <activity android:name=".AppendContact"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.DIAL_PHONE"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+
 </manifest>

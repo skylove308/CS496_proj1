@@ -1,15 +1,19 @@
 package com.example.myapplication;
 
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +24,6 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 
 /**
@@ -71,6 +74,12 @@ public class SecondFragment extends Fragment {
         return BitmapFactory.decodeResource(res, resId, options);
     }
 
+    int[] images = {R.drawable.img_1, R.drawable.img_2, R.drawable.img_3, R.drawable.img_4,
+            R.drawable.img_5, R.drawable.img_6, R.drawable.img_7, R.drawable.img_8, R.drawable.img_9,
+            R.drawable.img_10, R.drawable.img_11, R.drawable.img_12, R.drawable.img_13, R.drawable.img_14,
+            R.drawable.img_15, R.drawable.img_16, R.drawable.img_17,
+    };
+
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
@@ -78,12 +87,6 @@ public class SecondFragment extends Fragment {
 
         class ImageAdapter extends BaseAdapter {
             private Context context;
-
-            private Integer[] images = {R.drawable.img_1,R.drawable.img_2, R.drawable.img_3, R.drawable.img_4,
-                    R.drawable.img_5, R.drawable.img_6, R.drawable.img_7, R.drawable.img_8, R.drawable.img_9,
-                    R.drawable.img_10, R.drawable.img_11, R.drawable.img_12, R.drawable.img_13, R.drawable.img_14,
-                    R.drawable.img_15, R.drawable.img_16, R.drawable.img_17,
-            };
 
             public ImageAdapter(Context c) {
                 this.context = c;
@@ -126,16 +129,25 @@ public class SecondFragment extends Fragment {
                         getActivity().getApplicationContext(),
                         PhotoDetail.class
                 );
+                intent.putExtra("images", images);
+                intent.putExtra("position", position);
                 startActivity(intent);
             }
         });
+
+        final int REQUEST_CAMERA = 1;
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab2);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                int permissionCamera = ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.CAMERA);
+                if(permissionCamera == PackageManager.PERMISSION_DENIED) {
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
+                } else {
+                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivity(takePictureIntent);
+                }
             }
         });
         return view;
