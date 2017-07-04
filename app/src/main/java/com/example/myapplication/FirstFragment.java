@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,18 +40,20 @@ public class FirstFragment extends Fragment {
 
         try {
             JSONArray jarray = new JSONArray(json);  // JSONArray 생성
-            final List<String> listContents = new ArrayList<String>(jarray.length());
-            final List<String> listContents2 = new ArrayList<String>(jarray.length());
+            final ArrayList<String> listContents = new ArrayList<String>(jarray.length());
+            final ArrayList<String> listContents2 = new ArrayList<String>(jarray.length());
             for(int i=0; i < jarray.length(); i++){
                 listContents.add(jarray.getJSONObject(i).getString("name")); //name 리스트 생성
                 listContents2.add(jarray.getJSONObject(i).getString("number")); //number 리스트 생성
             }
 
             View view = inflater.inflate(R.layout.fragment_first, container, false);
-            ArrayAdapter Adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, listContents);
+            ListAViewAdapter Adapter = new ListAViewAdapter(listContents, listContents2);
 
             ListView listview = (ListView) view.findViewById(R.id.contact_list);
             listview.setAdapter(Adapter);
+
+
             listview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
                 @Override
                 public void onItemClick(AdapterView parent, View v, int position, long id){
@@ -100,4 +103,6 @@ public class FirstFragment extends Fragment {
         }
         return json;
     }
+
+
 }
