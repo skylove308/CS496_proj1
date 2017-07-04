@@ -1,6 +1,10 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
+import android.media.Image;
+import android.net.Uri;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,11 +47,13 @@ public class ListAViewAdapter extends BaseAdapter {
         ImageView iconImageView = (ImageView) convertView.findViewById(R.id.imageView1) ;
         TextView titleTextView = (TextView) convertView.findViewById(R.id.name) ;
         TextView descTextView = (TextView) convertView.findViewById(R.id.phonenumber) ;
+        ImageView message = (ImageView) convertView.findViewById(R.id.mail_image);
+        ImageView call = (ImageView) convertView.findViewById(R.id.call_image);
 
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
 
         String listViewItem = listViewItemList.get(position);
-        String listViewItem2 = listViewItemList2.get(position);
+        final String listViewItem2 = listViewItemList2.get(position);
 
 
 
@@ -59,6 +65,32 @@ public class ListAViewAdapter extends BaseAdapter {
         }
         titleTextView.setText(listViewItem);
         descTextView.setText(listViewItem2);
+
+        call.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick (View v){
+                String phonenumber = listViewItem2;
+                String tel = "tel:" + phonenumber;
+                Intent myintent = new Intent(Intent.ACTION_DIAL, Uri.parse(tel));
+                context.startActivity(myintent);
+            }
+        });
+
+        call.setFocusable(false);
+
+        message.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick (View v){
+                String phonenumber = listViewItem2;
+                String tel = "tel:" + phonenumber;
+                Intent myintent = new Intent(Intent.ACTION_VIEW, Uri.parse(tel));
+                context.startActivity(myintent);
+            }
+        });
+
+        message.setFocusable(false);
 
         return convertView;
     }
