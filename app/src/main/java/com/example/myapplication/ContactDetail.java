@@ -77,7 +77,7 @@ public class ContactDetail extends AppCompatActivity {
         if (requestCode == REQUEST_EDIT_CONTACT && resultCode == RESULT_OK){
             change_flag = 1;
             retName = data.getStringExtra("name");
-            retNumber = data.getStringExtra("phoneNumber");
+            retNumber = data.getStringExtra("number");
             String email = data.getStringExtra("email");
 
             name.setText(retName);

@@ -48,7 +48,7 @@ public class AppendContact extends AppCompatActivity {
                 Intent contactIntent = new Intent();
 
                 contactIntent.putExtra("name", editName.getText().toString());
-                contactIntent.putExtra("phoneNumber", editNumber.getText().toString());
+                contactIntent.putExtra("number", editNumber.getText().toString());
                 contactIntent.putExtra("email", editEmail.getText().toString());
 
                 setResult(RESULT_OK, contactIntent);
