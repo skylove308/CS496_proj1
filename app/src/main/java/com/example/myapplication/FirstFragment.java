@@ -25,8 +25,6 @@ import java.util.List;
  */
 public class FirstFragment extends Fragment {
 
-
-
     public FirstFragment() {
         // Required empty public constructor
     }
@@ -63,7 +61,8 @@ public class FirstFragment extends Fragment {
                     );
                     intent.putExtra("name", listContents.get(position));
                     intent.putExtra("number", listContents2.get(position));
-                    intent.putExtra("picture", getResources().getIdentifier(listContents.get(position).toLowerCase(), "drawable", getActivity().getApplicationContext().getPackageName()));
+                    intent.putExtra("picture", getResources().getIdentifier(
+                            listContents.get(position).toLowerCase(), "drawable", getActivity().getApplicationContext().getPackageName()));
                     startActivity(intent);
                 }
             });
@@ -80,7 +79,6 @@ public class FirstFragment extends Fragment {
 
                 }
             });
-
             return view;
         } catch (JSONException e) {
             e.printStackTrace();

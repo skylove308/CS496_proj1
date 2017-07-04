@@ -1,40 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageView
-        android:layout_width="70sp"
-        android:layout_height="60sp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:scaleType="fitXY"
         android:id="@+id/imageView1"
-        android:paddingRight="10sp"/>
+        android:layout_margin="@dimen/contact_margin" />
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:paddingBottom="5sp">
+        android:layout_margin="@dimen/contact_margin">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="New Text"
             android:id="@+id/name"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textColor="#000000"
             android:gravity="center_vertical"
-            android:layout_weight="2"
-            android:paddingBottom="3sp"/>
+            android:layout_weight="2"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="New Text"
             android:id="@+id/phonenumber"
-            android:textSize="14dp"
+            android:textSize="14sp"
             android:textColor="#666666"
             android:layout_weight="1" />
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mail_image"
+        android:layout_gravity="end|center_vertical"
+        android:src="@drawable/ic_mail"
+        android:layout_margin="@dimen/contact_margin" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/call_image"
+        android:layout_gravity="end|center_vertical"
+        android:src="@drawable/ic_call"
+        android:layout_margin="@dimen/contact_margin" />
 
 </LinearLayout>
