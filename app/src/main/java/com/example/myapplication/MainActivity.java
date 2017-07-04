@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     final int[] ICONS = new int[]{
             R.drawable.ic_account_box,
             R.drawable.ic_photo_library,
-            R.drawable.ic_photo_filter
+            R.drawable.ic_action_name
     };
 
     @Override
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 case 1:
                     return "Photo";
                 case 2:
-                    return "Filter";
+                    return "Voca";
             }
             return null;
         }
