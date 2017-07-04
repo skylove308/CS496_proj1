@@ -24,6 +24,7 @@ public class ContactDetail extends AppCompatActivity {
     int position;
     String retName;
     String retNumber;
+    int change_flag = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -74,6 +75,7 @@ public class ContactDetail extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_EDIT_CONTACT && resultCode == RESULT_OK){
+            change_flag = 1;
             retName = data.getStringExtra("name");
             retNumber = data.getStringExtra("phoneNumber");
             String email = data.getStringExtra("email");
@@ -92,6 +94,7 @@ public class ContactDetail extends AppCompatActivity {
         returnIntent.putExtra("name", retName);
         returnIntent.putExtra("number", retNumber);
         returnIntent.putExtra("position", position);
+        returnIntent.putExtra("change_flag", change_flag);
         setResult(RESULT_OK, returnIntent);
         finish();
     }

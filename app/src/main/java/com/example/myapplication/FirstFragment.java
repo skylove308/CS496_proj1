@@ -109,7 +109,7 @@ public class FirstFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK){
             String name = data.getStringExtra("name");
-            String number = data.getStringExtra("phoneNumber");
+            String number = data.getStringExtra("number");
             if (requestCode == REQUEST_NEW_CONTACT){
                 String email = data.getStringExtra("email");
 
@@ -117,10 +117,12 @@ public class FirstFragment extends Fragment {
                 listContents2.add(number);
                 listContents3.add(name);
             } else if (requestCode == REQUEST_GET_DETAIL){
+                int change_flag = data.getIntExtra("change_flag", 0);
                 int position = data.getIntExtra("position", 0);
-                listContents.set(position, name);
-                listContents2.set(position, number);
-                listContents3.set(position, name);
+                if(change_flag == 1) {
+                    listContents.set(position, name);
+                    listContents2.set(position, number);
+                }
             }
             listview.invalidateViews();
         }
