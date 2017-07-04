@@ -1,7 +1,6 @@
 package com.example.myapplication;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ListAViewAdapter extends BaseAdapter {
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
@@ -21,7 +19,6 @@ public class ListAViewAdapter extends BaseAdapter {
     public ListAViewAdapter(ArrayList list, ArrayList list2) {
         listViewItemList = list;
         listViewItemList2 = list2;
-
     }
 
     // Adapter에 사용되는 데이터의 개수를 리턴. : 필수 구현
