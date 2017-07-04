@@ -52,7 +52,11 @@ public class ListAViewAdapter extends BaseAdapter {
 
 
         // 아이템 내 각 위젯에 데이터 반영
-        iconImageView.setImageResource(context.getResources().getIdentifier(listViewItemList.get(position).toLowerCase(), "drawable", context.getApplicationContext().getPackageName()));
+        try{
+            iconImageView.setImageResource(context.getResources().getIdentifier(listViewItemList.get(position).toLowerCase(), "drawable", context.getApplicationContext().getPackageName()));
+        }catch (NullPointerException e){
+            iconImageView.setImageResource(R.drawable.ic_person_black);
+        }
         titleTextView.setText(listViewItem);
         descTextView.setText(listViewItem2);
 

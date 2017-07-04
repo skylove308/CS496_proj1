@@ -19,6 +19,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +31,12 @@ public class FirstFragment extends Fragment {
         // Required empty public constructor
     }
 
+    ArrayList<String> listContents;
+    ArrayList<String> listContents2;
+    ListView listview;
+
+    final int REQUEST_GET_CONTACT = 1;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState) {
@@ -38,8 +46,8 @@ public class FirstFragment extends Fragment {
 
         try {
             JSONArray jarray = new JSONArray(json);  // JSONArray 생성
-            final ArrayList<String> listContents = new ArrayList<String>(jarray.length());
-            final ArrayList<String> listContents2 = new ArrayList<String>(jarray.length());
+            listContents = new ArrayList<String>(jarray.length());
+            listContents2 = new ArrayList<String>(jarray.length());
             for(int i=0; i < jarray.length(); i++){
                 listContents.add(jarray.getJSONObject(i).getString("name")); //name 리스트 생성
                 listContents2.add(jarray.getJSONObject(i).getString("number")); //number 리스트 생성
@@ -48,7 +56,7 @@ public class FirstFragment extends Fragment {
             View view = inflater.inflate(R.layout.fragment_first, container, false);
             ListAViewAdapter Adapter = new ListAViewAdapter(listContents, listContents2);
 
-            ListView listview = (ListView) view.findViewById(R.id.contact_list);
+            listview = (ListView) view.findViewById(R.id.contact_list);
             listview.setAdapter(Adapter);
 
 
@@ -61,8 +69,12 @@ public class FirstFragment extends Fragment {
                     );
                     intent.putExtra("name", listContents.get(position));
                     intent.putExtra("number", listContents2.get(position));
-                    intent.putExtra("picture", getResources().getIdentifier(
-                            listContents.get(position).toLowerCase(), "drawable", getActivity().getApplicationContext().getPackageName()));
+                    try {
+                        intent.putExtra("picture", getResources().getIdentifier(
+                                listContents.get(position).toLowerCase(), "drawable", getActivity().getApplicationContext().getPackageName()));
+                    }catch (NullPointerException e){
+                        intent.putExtra("picture", R.drawable.ic_person_black);
+                    }
                     startActivity(intent);
                 }
             });
@@ -71,12 +83,12 @@ public class FirstFragment extends Fragment {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(
+                    Intent newContractIntent = new Intent(
                             getActivity().getApplicationContext(),
                             AppendContact.class
                     );
-                    startActivity(intent);
 
+                    startActivityForResult(newContractIntent, REQUEST_GET_CONTACT);
                 }
             });
             return view;
@@ -86,6 +98,21 @@ public class FirstFragment extends Fragment {
         return null;
 
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_GET_CONTACT && resultCode == RESULT_OK){
+            String name = data.getStringExtra("name");
+            String number = data.getStringExtra("phoneNumber");
+            String email = data.getStringExtra("email");
+
+            listContents.add(name);
+            listContents2.add(number);
+
+            listview.invalidateViews();
+        }
+    }
+
     public String parseJSON() {
         String json = null;
         try {
