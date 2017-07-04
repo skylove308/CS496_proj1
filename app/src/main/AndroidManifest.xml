@@ -33,4 +33,6 @@
     </application>
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.DIAL_PHONE"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+
 </manifest>
