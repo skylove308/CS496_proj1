@@ -2,7 +2,6 @@ package com.example.myapplication;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.view.LayoutInflater;
@@ -70,10 +69,10 @@ public class ListAViewAdapter extends BaseAdapter {
         {
             @Override
             public void onClick (View v){
-                String phonenumber = listViewItem2;
-                String tel = "tel:" + phonenumber;
-                Intent myintent = new Intent(Intent.ACTION_DIAL, Uri.parse(tel));
-                context.startActivity(myintent);
+                String phoneNumber = listViewItem2;
+                String tel = "tel:" + phoneNumber;
+                Intent myIntent = new Intent(Intent.ACTION_DIAL, Uri.parse(tel));
+                context.startActivity(myIntent);
             }
         });
 

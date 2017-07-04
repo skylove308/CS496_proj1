@@ -18,21 +18,40 @@ public class AppendContact extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.append_contact);
 
+        Intent intent = getIntent();
+        String name;
+        String phoneNumber;
+
+        try{
+            name = intent.getStringExtra("name");
+        }catch (NullPointerException e){
+            name = "";
+        }
+
+        try {
+            phoneNumber = intent.getStringExtra("number");
+        }catch (NullPointerException e){
+            phoneNumber = "";
+        }
+
         final EditText editName = (EditText)findViewById(R.id.editName);
         final EditText editNumber = (EditText)findViewById(R.id.editNumber);
         final EditText editEmail = (EditText)findViewById(R.id.editEmail);
         Button btn = (Button)findViewById(R.id.btn);
 
+        editName.setText(name);
+        editNumber.setText(phoneNumber);
+
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
+                Intent contactIntent = new Intent();
 
-                intent.putExtra("name", editName.getText().toString());
-                intent.putExtra("phoneNumber", editNumber.getText().toString());
-                intent.putExtra("email", editEmail.getText().toString());
+                contactIntent.putExtra("name", editName.getText().toString());
+                contactIntent.putExtra("phoneNumber", editNumber.getText().toString());
+                contactIntent.putExtra("email", editEmail.getText().toString());
 
-                setResult(RESULT_OK, intent);
+                setResult(RESULT_OK, contactIntent);
                 finish();
             }
         });

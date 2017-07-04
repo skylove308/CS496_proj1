@@ -35,7 +35,8 @@ public class FirstFragment extends Fragment {
     ArrayList<String> listContents2;
     ListView listview;
 
-    final int REQUEST_GET_CONTACT = 1;
+    final int REQUEST_NEW_CONTACT = 1;
+    final int REQUEST_GET_DETAIL = 2;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,13 +70,14 @@ public class FirstFragment extends Fragment {
                     );
                     intent.putExtra("name", listContents.get(position));
                     intent.putExtra("number", listContents2.get(position));
+                    intent.putExtra("position", position);
                     try {
                         intent.putExtra("picture", getResources().getIdentifier(
                                 listContents.get(position).toLowerCase(), "drawable", getActivity().getApplicationContext().getPackageName()));
                     }catch (NullPointerException e){
                         intent.putExtra("picture", R.drawable.ic_person_black);
                     }
-                    startActivity(intent);
+                    startActivityForResult(intent, REQUEST_GET_DETAIL);
                 }
             });
 
@@ -87,8 +89,7 @@ public class FirstFragment extends Fragment {
                             getActivity().getApplicationContext(),
                             AppendContact.class
                     );
-
-                    startActivityForResult(newContractIntent, REQUEST_GET_CONTACT);
+                    startActivityForResult(newContractIntent, REQUEST_NEW_CONTACT);
                 }
             });
             return view;
@@ -101,14 +102,19 @@ public class FirstFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_GET_CONTACT && resultCode == RESULT_OK){
+        if (resultCode == RESULT_OK){
             String name = data.getStringExtra("name");
             String number = data.getStringExtra("phoneNumber");
-            String email = data.getStringExtra("email");
+            if (requestCode == REQUEST_NEW_CONTACT){
+                String email = data.getStringExtra("email");
 
-            listContents.add(name);
-            listContents2.add(number);
-
+                listContents.add(name);
+                listContents2.add(number);
+            } else if (requestCode == REQUEST_GET_DETAIL){
+                int position = data.getIntExtra("position", 0);
+                listContents.set(position, name);
+                listContents2.set(position, number);
+            }
             listview.invalidateViews();
         }
     }

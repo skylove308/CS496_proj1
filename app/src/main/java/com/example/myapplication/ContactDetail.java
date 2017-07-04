@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -17,36 +18,81 @@ import android.widget.TextView;
 
 
 public class ContactDetail extends AppCompatActivity {
+    final int REQUEST_EDIT_CONTACT = 0;
+    TextView name;
+    TextView number;
+    int position;
+    String retName;
+    String retNumber;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.contact_detail);
 
-        TextView name = (TextView)findViewById(R.id.textView1);
-        TextView number = (TextView)findViewById(R.id.textView2);
+        name = (TextView)findViewById(R.id.textView1);
+        number = (TextView)findViewById(R.id.textView2);
         ImageView picture = (ImageView)findViewById(R.id.imageView);
         ImageView phone = (ImageView)findViewById(R.id.button1);
         ImageView modify = (ImageView)findViewById(R.id.button2);
 
 
-        Intent intent = getIntent();
-        name.setText(intent.getStringExtra("name"));
-        number.setText(intent.getStringExtra("number"));
+        final Intent intent = getIntent();
+        retName = intent.getStringExtra("name");
+        retNumber = intent.getStringExtra("number");
+        position = intent.getIntExtra("position", 0);
+
+        name.setText(retName);
+        number.setText(retNumber);
         picture.setImageResource(intent.getIntExtra("picture",0));
 
+        phone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View v) {
+                Intent intent = getIntent();
+                String phoneNumber = intent.getStringExtra("number");
+                String tel = "tel:" + phoneNumber;
+                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(tel));
+                startActivity(myIntent);
+            }
+        });
 
-
-    phone.setOnClickListener(new View.OnClickListener()
-
-    {
-        @Override
-        public void onClick (View v){
-        Intent intent = getIntent();
-        String phonenumber = intent.getStringExtra("number");
-        String tel = "tel:" + phonenumber;
-        Intent myintent = new Intent(Intent.ACTION_VIEW, Uri.parse(tel));
-        startActivity(myintent);
+        modify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View v) {
+                Intent editContactIntent = new Intent(
+                        getApplicationContext(),
+                        AppendContact.class
+                );
+                editContactIntent.putExtra("name", retName);
+                editContactIntent.putExtra("number", retNumber);
+                startActivityForResult(editContactIntent, REQUEST_EDIT_CONTACT);
+            }
+        });
     }
-    });
-}
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_EDIT_CONTACT && resultCode == RESULT_OK){
+            retName = data.getStringExtra("name");
+            retNumber = data.getStringExtra("phoneNumber");
+            String email = data.getStringExtra("email");
+
+            name.setText(retName);
+            number.setText(retNumber);
+
+            name.invalidate();
+            number.invalidate();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("name", retName);
+        returnIntent.putExtra("number", retNumber);
+        returnIntent.putExtra("position", position);
+        setResult(RESULT_OK, returnIntent);
+        finish();
+    }
 }
