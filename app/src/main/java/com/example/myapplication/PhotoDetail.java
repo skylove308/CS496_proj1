@@ -17,6 +17,8 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 
+import uk.co.senab.photoview.PhotoViewAttacher;
+
 /**
  * Created by q on 2017-07-03.
  */
@@ -54,7 +56,8 @@ public class PhotoDetail extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 ImageView imageView = (ImageView) findViewById(R.id.image);
-                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                PhotoViewAttacher photoAttacher = new PhotoViewAttacher(imageView);
+                photoAttacher.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 imageView.setImageResource(images[position]);
                 gallery.setSelection(position);
             }
