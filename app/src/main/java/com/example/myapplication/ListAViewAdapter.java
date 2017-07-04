@@ -18,11 +18,13 @@ public class ListAViewAdapter extends BaseAdapter {
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
     private ArrayList<String> listViewItemList = new ArrayList() ;
     private ArrayList<String> listViewItemList2 = new ArrayList() ;
+    private ArrayList<String> listViewItemList3 = new ArrayList() ;
 
     // ListViewAdapter의 생성자
-    public ListAViewAdapter(ArrayList list, ArrayList list2) {
+    public ListAViewAdapter(ArrayList list, ArrayList list2, ArrayList list3) {
         listViewItemList = list;
         listViewItemList2 = list2;
+        listViewItemList3 = list3;
     }
 
     // Adapter에 사용되는 데이터의 개수를 리턴. : 필수 구현
@@ -54,13 +56,14 @@ public class ListAViewAdapter extends BaseAdapter {
 
         String listViewItem = listViewItemList.get(position);
         final String listViewItem2 = listViewItemList2.get(position);
+        String listViewItem3 = listViewItemList3.get(position);
 
 
 
         // 아이템 내 각 위젯에 데이터 반영
-        try{
-            iconImageView.setImageResource(context.getResources().getIdentifier(listViewItemList.get(position).toLowerCase(), "drawable", context.getApplicationContext().getPackageName()));
-        }catch (NullPointerException e){
+        if(context.getResources().getIdentifier(listViewItem3, "drawable", context.getApplicationContext().getPackageName()) != 0){
+            iconImageView.setImageResource(context.getResources().getIdentifier(listViewItem3, "drawable", context.getApplicationContext().getPackageName()));
+        }else {
             iconImageView.setImageResource(R.drawable.ic_person_black);
         }
         titleTextView.setText(listViewItem);
