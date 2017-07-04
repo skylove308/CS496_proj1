@@ -16,6 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +34,7 @@ public class FirstFragment extends Fragment {
 
     ArrayList<String> listContents;
     ArrayList<String> listContents2;
+    ArrayList<String> listContents3;
     ListView listview;
 
     final int REQUEST_NEW_CONTACT = 1;
@@ -49,13 +51,15 @@ public class FirstFragment extends Fragment {
             JSONArray jarray = new JSONArray(json);  // JSONArray 생성
             listContents = new ArrayList<String>(jarray.length());
             listContents2 = new ArrayList<String>(jarray.length());
+            listContents3 = new ArrayList<String>(jarray.length());
             for(int i=0; i < jarray.length(); i++){
                 listContents.add(jarray.getJSONObject(i).getString("name")); //name 리스트 생성
                 listContents2.add(jarray.getJSONObject(i).getString("number")); //number 리스트 생성
+                listContents3.add(jarray.getJSONObject(i).getString("picture")); //picture 리스트 생성
             }
 
             View view = inflater.inflate(R.layout.fragment_first, container, false);
-            ListAViewAdapter Adapter = new ListAViewAdapter(listContents, listContents2);
+            ListAViewAdapter Adapter = new ListAViewAdapter(listContents, listContents2, listContents3);
 
             listview = (ListView) view.findViewById(R.id.contact_list);
             listview.setAdapter(Adapter);
@@ -68,13 +72,14 @@ public class FirstFragment extends Fragment {
                             getActivity().getApplicationContext(),
                             ContactDetail.class
                     );
-                    intent.putExtra("name", listContents.get(position));
-                    intent.putExtra("number", listContents2.get(position));
+                    intent.putExtra("name", listContents.get(position).toString());
+                    intent.putExtra("number", listContents2.get(position).toString());
                     intent.putExtra("position", position);
-                    try {
+                    if (getResources().getIdentifier(
+                            listContents3.get(position), "drawable", getActivity().getApplicationContext().getPackageName()) != 0) {
                         intent.putExtra("picture", getResources().getIdentifier(
-                                listContents.get(position).toLowerCase(), "drawable", getActivity().getApplicationContext().getPackageName()));
-                    }catch (NullPointerException e){
+                                listContents3.get(position), "drawable", getActivity().getApplicationContext().getPackageName()));
+                    }else {
                         intent.putExtra("picture", R.drawable.ic_person_black);
                     }
                     startActivityForResult(intent, REQUEST_GET_DETAIL);
@@ -110,10 +115,12 @@ public class FirstFragment extends Fragment {
 
                 listContents.add(name);
                 listContents2.add(number);
+                listContents3.add(name);
             } else if (requestCode == REQUEST_GET_DETAIL){
                 int position = data.getIntExtra("position", 0);
                 listContents.set(position, name);
                 listContents2.set(position, number);
+                listContents3.set(position, name);
             }
             listview.invalidateViews();
         }
