@@ -48,7 +48,7 @@ public class ThirdFragment extends Fragment {
 
             // Inflate the layout for this fragment
             final View view = inflater.inflate(R.layout.fragment_third, container, false);
-            final ListCViewAdapter Adapter = new ListCViewAdapter(Korean, English);
+            final ListCViewAdapter Adapter = new ListCViewAdapter(English, Korean);
 
             final ListView listView = (ListView) view.findViewById(R.id.list1);
             listView.setAdapter(Adapter);
