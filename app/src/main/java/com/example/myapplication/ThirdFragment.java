@@ -2,14 +2,14 @@ package com.example.myapplication;
 
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -17,7 +17,11 @@ import android.widget.ListView;
  */
 public class ThirdFragment extends Fragment {
 
-    static final String[] LIST_CONTACT = {"PERSON1", "PERSON2", "PERSON3"};
+    List Korean = new ArrayList();
+    List English = new ArrayList();
+    ArrayAdapter<String> Adapter;
+
+
 
     public ThirdFragment() {
         // Required empty public constructor
@@ -27,21 +31,44 @@ public class ThirdFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_third, null);
-        ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, LIST_CONTACT);
+        View view = inflater.inflate(R.layout.fragment_third, container, false);
+        final ArrayAdapter Adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, Korean);
+        final ArrayAdapter Adapter2 = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, English);
 
-        ListView listview = (ListView) view.findViewById(R.id.some_list);
-        listview.setAdapter(adapter);
+        final ListView listView = (ListView) view.findViewById(R.id.list1);
+        listView.setAdapter(Adapter);
+        Korean.add("사과");
+        Korean.add("당근");
+        Korean.add("기차");
+        English.add("apple");
+        English.add("carrot");
+        English.add("train");
 
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab3);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                // Create a ListView-specific touch listener. ListViews are given special treatment because
+                // by default they handle touches for their list items... i.e. they're in charge of drawing
+                // the pressed state (the list selector), handling list item clicks, etc.
+                SwipeDismissListViewTouchListener touchListener =
+                        new SwipeDismissListViewTouchListener(
+                                listView,
+                                new SwipeDismissListViewTouchListener.DismissCallbacks() {
+                                    @Override
+                                    public boolean canDismiss(int position) {
+                                        return true;
+                                    }
+
+                                    @Override
+                                    public void onDismiss(ListView listView, int[] reverseSortedPositions) {
+                                        for (int position : reverseSortedPositions) {
+                                            Adapter.remove(Adapter.getItem(position));
+                                        }
+                                        Adapter.notifyDataSetChanged();
+                                    }
+                                });
+                listView.setOnTouchListener(touchListener);
+                // Setting this scroll listener is required to ensure that during ListView scrolling,
+                // we don't look for swipes.
+                listView.setOnScrollListener(touchListener.makeScrollListener());
+                return view;
             }
-        });
-        return view;
-    }
+            }
 
-}
